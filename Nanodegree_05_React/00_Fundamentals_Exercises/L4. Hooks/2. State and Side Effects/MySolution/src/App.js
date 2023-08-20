@@ -2,15 +2,22 @@ import logo from "./logo.svg";
 import "./App.css";
 import Score from "./Score";
 import Game from "./Game";
-
-const numQuestions = 0;
-const numCorrect = 0;
-
-const handleAnswer = (answer) => {
-
-}
+import { useState } from "react";
 
 const App = () => {
+
+  const [numQuestions, setNumQuestions] = useState(0);
+  const [numCorrect, setNumCorrect] = useState(0);
+
+  const handleAnswer = (answer) => {
+    if (answer) {
+      setNumQuestions(numQuestions + 1)
+      setNumCorrect(numCorrect + 1)
+    } else {
+      setNumQuestions(numQuestions + 1)
+    }
+  }
+
   return (
     <div className="App">
       <header className="App-header">
