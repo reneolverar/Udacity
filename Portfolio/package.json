@@ -1,0 +1,20 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@testing-library/jest-dom": "latest",
+    "@testing-library/react": "latest",
+    "@testing-library/user-event": "latest",
+    "next": "latest",
+    "prop-types": "latest",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-scripts": "latest",
+    "web-vitals": "latest",
+    "x----x----x": "*"
+  }
+}
