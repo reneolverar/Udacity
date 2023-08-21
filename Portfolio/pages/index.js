@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
-import  App  from 'app-gamesPlayed/src';
+import ShowCase from '../components/ShowCase';
 
 export default function Home() {
   return (
@@ -21,12 +21,7 @@ export default function Home() {
 
         <h4>Exercises</h4>
 
-        <div>
-
-        </div>
-
-
-
+        <ShowCase/>
 
         <p className={styles.description}>
           Get started by editing <code>pages/index.js</code>

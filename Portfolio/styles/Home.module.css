@@ -89,3 +89,11 @@
     flex-direction: column;
   }
 }
+
+.show-case {
+  display: flex;
+}
+
+.show-case-example {
+  border: 5px solid red;
+}

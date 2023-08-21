@@ -6,9 +6,15 @@
     "start": "next start"
   },
   "dependencies": {
+    "@testing-library/jest-dom": "latest",
+    "@testing-library/react": "latest",
+    "@testing-library/user-event": "latest",
     "next": "latest",
+    "prop-types": "latest",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "app-gamesPlayed": "file:../../Nanodegree_05_React/00_Fundamentals_Exercises/L3. State Management/6. All Together/MySolution/"
+    "react-scripts": "latest",
+    "web-vitals": "latest",
+    "x----x----x": "*"
   }
 }
