@@ -15,7 +15,7 @@ const CreateContact = ({ onCreateContact }) => {
   return (
     <div>
       <Link className="close-create-contact" to="/">
-        Close
+        Close create contact
       </Link>
       <form onSubmit={handleSubmit} className="create-contact-form">
         <ImageInput
