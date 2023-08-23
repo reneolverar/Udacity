@@ -1,5 +1,18 @@
-import {React, useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
+
+const options = [
+    { value: "none", disabled: true, text: "Move to..." },
+    { value: "currentlyReading", text: "Currently Reading" },
+    { value: "wantToRead", text: "Want to Read" },
+    { value: "read", text: "Read"},
+    { value: "none", text: "None" },
+]
+
+function Option({value, text, shelf, disabled=false}) {
+  return (
+    <option value={value} disabled={disabled}>{shelf === value && "✔"} { text }</option>
+  )
+}
 
 function ShelfChanger(props) {
     const { book, onShelfChange } = props
@@ -11,12 +24,15 @@ function ShelfChanger(props) {
 
   return (
     <div className="book-shelf-changer">
-          <select value={shelf} onChange={ handleChange }>
-            <option value="none" disabled>Move to...</option>
-            <option value="currentlyReading">Currently Reading</option>
-            <option value="wantToRead">Want to Read</option>
-            <option value="read">Read</option>
-            <option value="none">None</option>
+      <select value={shelf} onChange={handleChange}>
+          {options.map(
+            (option, i) =>
+              <Option
+                key={i}
+                {...option}
+                shelf={shelf}
+              />
+          )}
         </select>
     </div>
   )
