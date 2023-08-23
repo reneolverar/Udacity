@@ -24,7 +24,7 @@ function ShelfChanger(props) {
 }
 
 ShelfChanger.propTypes = {
-  book: PropTypes.array.isRequired,
+  book: PropTypes.object.isRequired,
   onShelfChange: PropTypes.func.isRequired,
 }
 
