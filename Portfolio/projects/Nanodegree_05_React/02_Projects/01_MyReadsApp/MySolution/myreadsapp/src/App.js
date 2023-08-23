@@ -4,24 +4,22 @@ import BookShelf from "./components/BookShelf";
 import * as BooksAPI from "./BooksAPI";
 
 function App() {
-  const [showSearchPage, setShowSearchpage] = useState(false);
-  const [books, setBooks] = useState(null);
-  const shelfs = [
-    {
-      name: "Currently reading",
-      id: "currentlyReading"
-    },
-    {
-      name: "Want to Read",
-      id: "wantToRead"
-    },
-    {
-      name: "Read",
-      id: "read"
-    },
-  ]
-  const shelfChange = (book, shelf) => {
-  }
+    const [showSearchPage, setShowSearchpage] = useState(false);
+    const [books, setBooks] = useState(null);
+    const shelfs = [
+      {
+        name: "Currently reading",
+        id: "currentlyReading"
+      },
+      {
+        name: "Want to Read",
+        id: "wantToRead"
+      },
+      {
+        name: "Read",
+        id: "read"
+      },
+    ]
 
 // Example: Book from API
 //   {
@@ -73,61 +71,76 @@ function App() {
 //   "shelf": "read"
 // }
 
-  const getBooks = async () => {
-    const res = await BooksAPI.getAll();
-    setBooks(res);
-  };
+    const getBooks = async () => {
+        const res = await BooksAPI.getAll();
+        setBooks(res);
+    };
 
-  useEffect(() => {
-    getBooks();
-    }, []);
+    const shelfChange = (book, shelf) => {
+        if (book.shelf !== shelf) {
+        updateBook(book, shelf)
+      }
+    }
 
-  return (
-    <div className="app">
-      {showSearchPage ? (
-        <div className="search-books">
-          <div className="search-books-bar">
-            <a
-              className="close-search"
-              onClick={() => setShowSearchpage(!showSearchPage)}
-            >
-              Close
-            </a>
-            <div className="search-books-input-wrapper">
-              <input
-                type="text"
-                placeholder="Search by title, author, or ISBN"
-              />
+    const updateBook = async (bookToUpdate, shelf) => {
+        const res = await BooksAPI.update(bookToUpdate, shelf);
+        const updatedBook = await fetchBook(bookToUpdate.id)
+        const newBooks = books.map(book => book.id === updatedBook.id ? updatedBook : book);
+        setBooks(newBooks)
+    };
+
+    const fetchBook = async (id) => await BooksAPI.get(id)
+
+    useEffect(() => {
+      getBooks();
+      }, []);
+
+    return (
+      <div className="app">
+        {showSearchPage ? (
+          <div className="search-books">
+            <div className="search-books-bar">
+              <a
+                className="close-search"
+                onClick={() => setShowSearchpage(!showSearchPage)}
+              >
+                Close
+              </a>
+              <div className="search-books-input-wrapper">
+                <input
+                  type="text"
+                  placeholder="Search by title, author, or ISBN"
+                />
+              </div>
+            </div>
+            <div className="search-books-results">
+              <ol className="books-grid"></ol>
             </div>
           </div>
-          <div className="search-books-results">
-            <ol className="books-grid"></ol>
-          </div>
-        </div>
-      ) : (
-        <div className="list-books">
-          <div className="list-books-title">
-            <h1>MyReads</h1>
-          </div>
-          <div className="list-books-content">
-            <div>
-                {books && shelfs.map((shelf) => (
-                  < BookShelf
-                    key={shelf.id}
-                    shelf={shelf}
-                    books={books.filter((book) => book.shelf === shelf.id)}
-                    onShelfChange={shelfChange}
-                  />
-                ))}
+        ) : (
+          <div className="list-books">
+            <div className="list-books-title">
+              <h1>MyReads</h1>
+            </div>
+            <div className="list-books-content">
+              <div>
+                  {books && shelfs.map((shelf) => (
+                    < BookShelf
+                      key={shelf.id}
+                      shelf={shelf}
+                      books={books.filter((book) => book.shelf === shelf.id)}
+                      onShelfChange={shelfChange}
+                    />
+                  ))}
+              </div>
+            </div>
+            <div className="open-search">
+              <a onClick={() => setShowSearchpage(!showSearchPage)}>Add a book</a>
             </div>
           </div>
-          <div className="open-search">
-            <a onClick={() => setShowSearchpage(!showSearchPage)}>Add a book</a>
-          </div>
-        </div>
-      )}
-    </div>
-  );
+        )}
+      </div>
+    );
 }
 
 export default App;
