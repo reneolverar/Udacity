@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import ShelfChanger from './ShelfChanger'
 
 function Book(props) {
-    const { title, authors, imageLinks, shelf } = props.book
+    const { title, authors, imageLinks} = props.book
     const onShelfChange = props.onShelfChange
     return (
         <div className="book">
@@ -17,7 +17,6 @@ function Book(props) {
                 }}
             ></div>
                 <ShelfChanger
-                    shelf={shelf}
                     book={props.book}
                     onShelfChange={onShelfChange}
                 />
