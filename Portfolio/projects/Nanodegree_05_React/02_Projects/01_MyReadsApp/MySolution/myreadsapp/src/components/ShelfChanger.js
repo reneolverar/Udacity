@@ -2,7 +2,8 @@ import {React, useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 
 function ShelfChanger(props) {
-    const {shelf, book, onShelfChange} = props
+    const { book, onShelfChange } = props
+    const { shelf } = book
     const [selectedShelf ,setSelectedShelf] = useState(shelf)
 
     const handleChange = (e) => {
@@ -23,7 +24,6 @@ function ShelfChanger(props) {
 }
 
 ShelfChanger.propTypes = {
-  shelf: PropTypes.string.isRequired,
   book: PropTypes.array.isRequired,
   onShelfChange: PropTypes.func.isRequired,
 }

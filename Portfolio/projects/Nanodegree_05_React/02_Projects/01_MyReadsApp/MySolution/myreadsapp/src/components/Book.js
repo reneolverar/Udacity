@@ -17,7 +17,6 @@ function Book(props) {
                 }}
             ></div>
                 <ShelfChanger
-                    shelf={shelf}
                     book={props.book}
                     onShelfChange={onShelfChange}
                 />
