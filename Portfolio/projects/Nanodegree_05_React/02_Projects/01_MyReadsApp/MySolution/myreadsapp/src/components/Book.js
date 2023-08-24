@@ -11,9 +11,9 @@ function Book(props) {
             <div
                 className="book-cover"
                 style={{
-                width: 128,
-                height: 193,
-                backgroundImage: `url("${imageLinks.smallThumbnail}")`,
+                    width: 128,
+                    height: 193,
+                    backgroundImage: imageLinks ? `url("${imageLinks.smallThumbnail}")` : "",
                 }}
             ></div>
                 <ShelfChanger

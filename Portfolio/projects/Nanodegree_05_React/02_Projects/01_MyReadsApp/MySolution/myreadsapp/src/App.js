@@ -2,11 +2,15 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import BookShelf from "./components/BookShelf";
 import * as BooksAPI from "./BooksAPI";
+import SearchBookInputField from "./components/SearchBookInputField";
+import SearchBookResults from "./components/SearchBookResults";
 
 function App() {
     const [showSearchPage, setShowSearchpage] = useState(false);
     const [books, setBooks] = useState(null);
-    const shelfs = [
+    const [searchResults, setSearchResults] = useState(null)
+
+  const shelfs = [
       {
         name: "Currently reading",
         id: "currentlyReading"
@@ -20,6 +24,7 @@ function App() {
         id: "read"
       },
     ]
+
 
 // Example: Book from API
 //   {
@@ -89,7 +94,23 @@ function App() {
         setBooks(newBooks)
     };
 
-    const fetchBook = async (id) => await BooksAPI.get(id)
+  const fetchBook = async (id) => await BooksAPI.get(id)
+
+  const searchInputChange = (query) => {
+    updateSearchResults(query)
+  }
+
+  const updateSearchResults = async (query)  => {
+      const res = await BooksAPI.search(query, 20);
+      //
+      const results = res && res.length > 0 && res.map(book => books.find(({ id }) => id === book.id) || book);
+      setSearchResults(results)
+  }
+
+  const handleCloseSearch = () => {
+    setShowSearchpage(!showSearchPage)
+    setSearchResults(null)
+  }
 
     useEffect(() => {
       getBooks();
@@ -102,20 +123,19 @@ function App() {
             <div className="search-books-bar">
               <a
                 className="close-search"
-                onClick={() => setShowSearchpage(!showSearchPage)}
+                onClick={() => handleCloseSearch()}
               >
                 Close
               </a>
-              <div className="search-books-input-wrapper">
-                <input
-                  type="text"
-                  placeholder="Search by title, author, or ISBN"
-                />
-              </div>
+              <SearchBookInputField
+                onSearchInputChange={searchInputChange}
+              />
             </div>
-            <div className="search-books-results">
-              <ol className="books-grid"></ol>
-            </div>
+            {searchResults && <SearchBookResults
+              books={books}
+              searchResults={searchResults}
+              onShelfChange={shelfChange}
+            />}
           </div>
         ) : (
           <div className="list-books">
