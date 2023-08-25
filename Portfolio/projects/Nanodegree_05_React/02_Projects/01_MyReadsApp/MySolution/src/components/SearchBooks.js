@@ -1,12 +1,12 @@
 import PropTypes from "prop-types"
-import { useState } from "react"
+import { Link } from "react-router-dom";
 import { useImmer } from "use-immer"
 import SearchBookInputField from "./SearchBooksInputField"
 import SearchBooksResults from "./SearchBooksResults"
 import * as BooksAPI from "../BooksAPI"
 
 export default function SearchBooks(props) {
-    const { books, onShelfChange, onCloseSearch } = props
+    const { books, onShelfChange } = props
     const [searchResults, setSearchResults] = useImmer(null)
 
     const searchInputChange = async (query) => {
@@ -35,12 +35,12 @@ export default function SearchBooks(props) {
     return (
         <div className="search-books">
             <div className="search-books-bar">
-                <a
+                <Link
                     className="close-search"
-                    onClick={onCloseSearch}
+                    to="/"
                 >
                     Close
-                </a>
+                </Link>
                 <SearchBookInputField onSearchInputChange={searchInputChange} />
             </div>
             {searchResults && (
@@ -56,5 +56,4 @@ export default function SearchBooks(props) {
 SearchBooks.propTypes = {
     books: PropTypes.array.isRequired,
     onShelfChange: PropTypes.func.isRequired,
-    onCloseSearch: PropTypes.func.isRequired,
 }

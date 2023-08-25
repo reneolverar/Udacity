@@ -1,10 +1,14 @@
 import "./App.css"
 import { useState, useEffect } from "react"
+import { Route, Routes, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom";
 import BookShelf from "./components/BookShelf"
 import * as BooksAPI from "./BooksAPI"
 import SearchBooks from "./components/SearchBooks"
 
 function App() {
+    // let navigate = useNavigate()
+
     const [showSearchPage, setShowSearchpage] = useState(false)
     const [books, setBooks] = useState(null)
 
@@ -90,47 +94,55 @@ function App() {
         getBooks()
     }
 
-    const fetchBook = async (id) => await BooksAPI.get(id)
-
-    const closeSearch = () => {
-        setShowSearchpage(!showSearchPage)
-    }
+    // const fetchBook = async (id) => await BooksAPI.get(id)
 
     return (
         <div className="app">
-            {showSearchPage ? (
-                <SearchBooks
-                    books={books}
-                    onShelfChange={shelfChange}
-                    onCloseSearch={closeSearch}
-                />
-            ) : (
-                <div className="list-books">
-                    <div className="list-books-title">
-                        <h1>MyReads</h1>
-                    </div>
-                    <div className="list-books-content">
-                        <div>
-                            {books &&
-                                shelfs.map((shelf) => (
-                                    <BookShelf
-                                        key={shelf.id}
-                                        shelf={shelf}
-                                        books={books.filter(
-                                            (book) => book.shelf === shelf.id
-                                        )}
-                                        onShelfChange={shelfChange}
-                                    />
-                                ))}
+            <Routes>
+                <Route
+                    exact
+                    path="/"
+                    element={
+                        <div className="list-books">
+                            <div className="list-books-title">
+                                <h1>MyReads</h1>
+                            </div>
+                            <div className="list-books-content">
+                                <div>
+                                    {books &&
+                                        shelfs.map((shelf) => (
+                                            <BookShelf
+                                                key={shelf.id}
+                                                shelf={shelf}
+                                                books={books.filter(
+                                                    (book) =>
+                                                        book.shelf === shelf.id
+                                                )}
+                                                onShelfChange={shelfChange}
+                                            />
+                                        ))}
+                                </div>
+                            </div>
+                            <div className="open-search">
+                                <Link
+                                    to="/search"
+                                >
+                                    Add a book
+                                </Link>
+                            </div>
                         </div>
-                    </div>
-                    <div className="open-search">
-                        <a onClick={() => setShowSearchpage(!showSearchPage)}>
-                            Add a book
-                        </a>
-                    </div>
-                </div>
-            )}
+                    }
+                />
+                <Route
+                    path="/search"
+                    element={
+                        <SearchBooks
+                            books={books}
+                            onShelfChange={shelfChange}
+                        />
+                    }
+                />
+            </Routes>
         </div>
     )
 }
