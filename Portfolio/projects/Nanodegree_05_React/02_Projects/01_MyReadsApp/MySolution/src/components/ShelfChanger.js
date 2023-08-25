@@ -1,14 +1,15 @@
 import PropTypes from 'prop-types'
 
 const options = [
-    { value: "none", disabled: true, text: "Move to..." },
+    { value: "moveTo", disabled: true, text: "Move to..." },
     { value: "currentlyReading", text: "Currently Reading" },
     { value: "wantToRead", text: "Want to Read" },
     { value: "read", text: "Read"},
     { value: "none", text: "None" },
 ]
 
-function Option({value, text, shelf, disabled=false}) {
+function Option({ value, text, shelf, disabled = false }) {
+    typeof shelf === "undefined" ? shelf = "none" : shelf = shelf
   return (
     <option value={value} disabled={disabled}>{shelf === value && "✔"} { text }</option>
   )
