@@ -4,20 +4,20 @@ const options = [
     { value: "moveTo", disabled: true, text: "Move to..." },
     { value: "currentlyReading", text: "Currently Reading" },
     { value: "wantToRead", text: "Want to Read" },
-    { value: "read", text: "Read"},
+    { value: "read", text: "Read" },
     { value: "none", text: "None" },
 ]
 
 function Option({ value, text, shelf, disabled = false }) {
-    typeof shelf === "undefined" ? shelf = "none" : shelf = shelf
-  return (
+    shelf = typeof shelf === "undefined" ? "none" : shelf
+    return (
         <option
             value={value}
             disabled={disabled}
         >
             {shelf === value && "✔"} {text}
         </option>
-  )
+    )
 }
 
 function ShelfChanger(props) {
@@ -28,27 +28,27 @@ function ShelfChanger(props) {
         onShelfChange(book, e.target.value)
     }
 
-  return (
-    <div className="book-shelf-changer">
+    return (
+        <div className="book-shelf-changer">
             <select
                 value={shelf}
                 onChange={handleChange}
             >
                 {options.map((option, i) => (
-              <Option
-                key={i}
-                {...option}
-                shelf={shelf}
-              />
+                    <Option
+                        key={i}
+                        {...option}
+                        shelf={shelf}
+                    />
                 ))}
-        </select>
-    </div>
-  )
+            </select>
+        </div>
+    )
 }
 
 ShelfChanger.propTypes = {
-  book: PropTypes.object.isRequired,
-  onShelfChange: PropTypes.func.isRequired,
+    book: PropTypes.object.isRequired,
+    onShelfChange: PropTypes.func.isRequired,
 }
 
 export default ShelfChanger
