@@ -1,21 +1,23 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import ShelfChanger from './ShelfChanger'
+import React from "react"
+import PropTypes from "prop-types"
+import ShelfChanger from "./ShelfChanger"
 
 export default function Book(props) {
-    const { title, authors, imageLinks} = props.book
+    const { title, authors, imageLinks } = props.book
     const onShelfChange = props.onShelfChange
     return (
         <div className="book">
             <div className="book-top">
-            <div
-                className="book-cover"
-                style={{
-                    width: 128,
-                    height: 193,
-                    backgroundImage: imageLinks ? `url("${imageLinks.smallThumbnail}")` : "",
-                }}
-            ></div>
+                <div
+                    className="book-cover"
+                    style={{
+                        width: 128,
+                        height: 193,
+                        backgroundImage: imageLinks
+                            ? `url("${imageLinks.smallThumbnail}")`
+                            : "",
+                    }}
+                ></div>
                 <ShelfChanger
                     book={props.book}
                     onShelfChange={onShelfChange}

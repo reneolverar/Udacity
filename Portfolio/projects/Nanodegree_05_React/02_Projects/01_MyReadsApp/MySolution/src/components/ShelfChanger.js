@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types"
 
 const options = [
     { value: "moveTo", disabled: true, text: "Move to..." },
@@ -11,7 +11,12 @@ const options = [
 function Option({ value, text, shelf, disabled = false }) {
     typeof shelf === "undefined" ? shelf = "none" : shelf = shelf
   return (
-    <option value={value} disabled={disabled}>{shelf === value && "✔"} { text }</option>
+        <option
+            value={value}
+            disabled={disabled}
+        >
+            {shelf === value && "✔"} {text}
+        </option>
   )
 }
 
@@ -25,15 +30,17 @@ function ShelfChanger(props) {
 
   return (
     <div className="book-shelf-changer">
-      <select value={shelf} onChange={handleChange}>
-          {options.map(
-            (option, i) =>
+            <select
+                value={shelf}
+                onChange={handleChange}
+            >
+                {options.map((option, i) => (
               <Option
                 key={i}
                 {...option}
                 shelf={shelf}
               />
-          )}
+                ))}
         </select>
     </div>
   )

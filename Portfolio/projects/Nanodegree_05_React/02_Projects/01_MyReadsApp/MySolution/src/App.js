@@ -1,14 +1,14 @@
-import "./App.css";
-import { useState, useEffect } from "react";
-import BookShelf from "./components/BookShelf";
-import * as BooksAPI from "./BooksAPI";
-import SearchBookInputField from "./components/SearchBookInputField";
-import SearchBookResults from "./components/SearchBookResults";
+import "./App.css"
+import { useState, useEffect } from "react"
+import BookShelf from "./components/BookShelf"
+import * as BooksAPI from "./BooksAPI"
+import SearchBookInputField from "./components/SearchBookInputField"
+import SearchBookResults from "./components/SearchBookResults"
 
 function App() {
-  const [showSearchPage, setShowSearchpage] = useState(false);
-  const [books, setBooks] = useState(null);
-  const [searchResults, setSearchResults] = useState(null);
+    const [showSearchPage, setShowSearchpage] = useState(false)
+    const [books, setBooks] = useState(null)
+    const [searchResults, setSearchResults] = useState(null)
 
   const shelfs = [
     {
@@ -23,7 +23,7 @@ function App() {
       name: "Read",
       id: "read",
     },
-  ];
+    ]
 
   // Example: Book from API
   //   {
@@ -76,8 +76,8 @@ function App() {
   // }
 
   useEffect(() => {
-    getBooks();
-  }, []);
+        getBooks()
+    }, [])
 
   const getBooks = async () => {
     const res = await BooksAPI.getAll();
@@ -88,43 +88,50 @@ function App() {
 
 
   const updateBook = async (bookToUpdate, shelf) => {
-    const res = await BooksAPI.update(bookToUpdate, shelf);
-    const updatedBook = await fetchBook(bookToUpdate.id);
+        const res = await BooksAPI.update(bookToUpdate, shelf)
+        const updatedBook = await fetchBook(bookToUpdate.id)
     const newBooks = books.map((book) =>
       book.id === updatedBook.id ? updatedBook : book
-    );
-    setBooks(newBooks);
-  };
+        )
+        setBooks(newBooks)
+    }
 
-  const fetchBook = async (id) => await BooksAPI.get(id);
+    const fetchBook = async (id) => await BooksAPI.get(id)
 
   const searchInputChange = async (query) => {
     if (query !== "") {
-        const res = await BooksAPI.search(query, 20);
+            const res = await BooksAPI.search(query, 20)
         const results =
             res &&
             res.length > 0 &&
-            res.map((book) => books.find(({ id }) => id === book.id) || book);
-        setSearchResults(results);
+                res.map(
+                    (book) => books.find(({ id }) => id === book.id) || book
+                )
+            setSearchResults(results)
     } else {
         setSearchResults("")
     }
-  };
+    }
 
   const handleCloseSearch = () => {
-    setShowSearchpage(!showSearchPage);
-    setSearchResults(null);
-  };
+        setShowSearchpage(!showSearchPage)
+        setSearchResults(null)
+    }
 
   return (
     <div className="app">
       {showSearchPage ? (
         <div className="search-books">
           <div className="search-books-bar">
-            <a className="close-search" onClick={() => handleCloseSearch()}>
+                        <a
+                            className="close-search"
+                            onClick={() => handleCloseSearch()}
+                        >
               Close
             </a>
-            <SearchBookInputField onSearchInputChange={searchInputChange} />
+                        <SearchBookInputField
+                            onSearchInputChange={searchInputChange}
+                        />
           </div>
           {searchResults && (
             <SearchBookResults
@@ -145,19 +152,23 @@ function App() {
                   <BookShelf
                     key={shelf.id}
                     shelf={shelf}
-                    books={books.filter((book) => book.shelf === shelf.id)}
+                                        books={books.filter(
+                                            (book) => book.shelf === shelf.id
+                                        )}
                     onShelfChange={shelfChange}
                   />
                 ))}
             </div>
           </div>
           <div className="open-search">
-            <a onClick={() => setShowSearchpage(!showSearchPage)}>Add a book</a>
+                        <a onClick={() => setShowSearchpage(!showSearchPage)}>
+                            Add a book
+                        </a>
           </div>
         </div>
       )}
     </div>
-  );
+    )
 }
 
-export default App;
+export default App
