@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import ShelfChanger from './ShelfChanger'
 
-function Book(props) {
+export default function Book(props) {
     const { title, authors, imageLinks} = props.book
     const onShelfChange = props.onShelfChange
     return (
@@ -31,5 +31,3 @@ Book.propTypes = {
     book: PropTypes.object.isRequired,
     onShelfChange: PropTypes.func.isRequired,
 }
-
-export default Book

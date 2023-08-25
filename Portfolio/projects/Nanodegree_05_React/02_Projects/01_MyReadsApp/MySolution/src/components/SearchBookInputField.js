@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import PropTypes from 'prop-types'
-import * as BooksAPI from "../BooksAPI";
+import _ from lodash
 
-function BookSearchBox({onSearchInputChange}) {
+
+export default function BookSearchBox({onSearchInputChange}) {
 
     const [query, setQuery] = useState("")
 
@@ -10,7 +11,7 @@ function BookSearchBox({onSearchInputChange}) {
 
     const handleInputChange = (query) => {
         setQuery(query)
-        onSearchInputChange(query)
+        _.debounce(onSearchInputChange(query))
     }
 
 
@@ -31,4 +32,4 @@ BookSearchBox.propTypes = {
     onSearchInputChange: PropTypes.func.isRequired,
 }
 
-export default BookSearchBox
+

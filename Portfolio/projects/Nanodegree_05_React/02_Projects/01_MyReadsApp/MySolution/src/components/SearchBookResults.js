@@ -1,10 +1,8 @@
-import React from 'react'
 import PropTypes from 'prop-types'
 import Book from './Book'
-import { search } from '../BooksAPI'
 
-function SearchBookResults(props) {
-    const { books, searchResults, onShelfChange } = props
+export default  function SearchBookResults(props) {
+    const { searchResults, onShelfChange } = props
   return (
     <div className="search-books-results">
         <ol className="books-grid">
@@ -19,9 +17,8 @@ function SearchBookResults(props) {
 }
 
 SearchBookResults.propTypes = {
-    books: PropTypes.array.isRequired,
     searchResults: PropTypes.array.isRequired,
     onShelfChange: PropTypes.func.isRequired,
 }
 
-export default SearchBookResults
+
