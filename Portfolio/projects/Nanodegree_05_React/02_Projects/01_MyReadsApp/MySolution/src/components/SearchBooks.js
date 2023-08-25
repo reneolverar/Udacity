@@ -1,9 +1,9 @@
 import PropTypes from "prop-types"
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
 import { useImmer } from "use-immer"
 import SearchBookInputField from "./SearchBooksInputField"
-import SearchBooksResults from "./SearchBooksResults"
 import * as BooksAPI from "../BooksAPI"
+import BookShelf from "./BookShelf"
 
 export default function SearchBooks(props) {
     const { books, onShelfChange } = props
@@ -43,12 +43,16 @@ export default function SearchBooks(props) {
                 </Link>
                 <SearchBookInputField onSearchInputChange={searchInputChange} />
             </div>
-            {searchResults && (
-                <SearchBooksResults
-                    searchResults={searchResults}
-                    onShelfChange={updateResultsShelf}
-                />
-            )}
+            <br/><br/>
+            <div>
+                {searchResults && (
+                    <BookShelf
+                        isSearchResults
+                        books={searchResults}
+                        onShelfChange={updateResultsShelf}
+                    />
+                )}
+            </div>
         </div>
     )
 }
