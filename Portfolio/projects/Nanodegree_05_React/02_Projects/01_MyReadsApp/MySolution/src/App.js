@@ -9,7 +9,6 @@ import SearchBooks from "./components/SearchBooks"
 function App() {
     // let navigate = useNavigate()
 
-    const [showSearchPage, setShowSearchpage] = useState(false)
     const [books, setBooks] = useState(null)
 
     const shelfs = [
@@ -133,7 +132,7 @@ function App() {
                         </div>
                     }
                 />
-                <Route
+                {books && <Route
                     path="/search"
                     element={
                         <SearchBooks
@@ -141,7 +140,7 @@ function App() {
                             onShelfChange={shelfChange}
                         />
                     }
-                />
+                />}
             </Routes>
         </div>
     )
