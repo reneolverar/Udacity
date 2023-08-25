@@ -9,7 +9,6 @@ const options = [
 ]
 
 function Option({ value, text, shelf, disabled = false }) {
-    shelf = typeof shelf === "undefined" ? "none" : shelf
     return (
         <option
             value={value}
@@ -24,6 +23,8 @@ function ShelfChanger(props) {
     const { book, onShelfChange } = props
     const { shelf } = book
 
+    const bookShelf = typeof shelf !== "undefined" ? shelf : "none"
+
     const handleChange = (e) => {
         onShelfChange(book, e.target.value)
     }
@@ -31,14 +32,14 @@ function ShelfChanger(props) {
     return (
         <div className="book-shelf-changer">
             <select
-                value={shelf}
+                value={bookShelf}
                 onChange={handleChange}
             >
                 {options.map((option, i) => (
                     <Option
                         key={i}
                         {...option}
-                        shelf={shelf}
+                        shelf={bookShelf}
                     />
                 ))}
             </select>
