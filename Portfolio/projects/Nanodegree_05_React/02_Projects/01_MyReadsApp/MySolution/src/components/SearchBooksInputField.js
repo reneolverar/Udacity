@@ -2,7 +2,7 @@ import { useState, useCallback } from "react"
 import PropTypes from "prop-types"
 import debounce from "lodash/debounce"
 
-export default function BookSearchBox({ onSearchInputChange }) {
+export default function SearchBooksInputField({ onSearchInputChange }) {
     const [query, setQuery] = useState("")
 
     const handleInputChange = (query) => {
@@ -27,6 +27,6 @@ export default function BookSearchBox({ onSearchInputChange }) {
     )
 }
 
-BookSearchBox.propTypes = {
+SearchBooksInputField.propTypes = {
     onSearchInputChange: PropTypes.func.isRequired,
 }

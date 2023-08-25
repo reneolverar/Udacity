@@ -1,7 +1,7 @@
 import PropTypes from "prop-types"
 import Book from "./Book"
 
-export default function SearchBookResults(props) {
+export default function SearchBooksResults(props) {
     const { searchResults, onShelfChange } = props
     return (
         <div className="search-books-results">
@@ -20,7 +20,7 @@ export default function SearchBookResults(props) {
     )
 }
 
-SearchBookResults.propTypes = {
+SearchBooksResults.propTypes = {
     searchResults: PropTypes.array.isRequired,
     onShelfChange: PropTypes.func.isRequired,
 }
