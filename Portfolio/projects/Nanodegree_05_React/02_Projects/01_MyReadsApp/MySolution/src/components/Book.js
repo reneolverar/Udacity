@@ -1,12 +1,25 @@
 import React from "react"
+import { useNavigate } from "react-router-dom"
 import PropTypes from "prop-types"
 import ShelfChanger from "./ShelfChanger"
 
 export default function Book(props) {
-    const { title, authors, imageLinks } = props.book
-    const onShelfChange = props.onShelfChange
+
+    let navigate = useNavigate()
+
+    const {book, onShelfChange} = props
+    const { title, authors, imageLinks } = book
+
+    const handleClick = (e) => {
+        navigate("/bookId/" + book.id)
+
+    }
+
     return (
-        <div className="book">
+        <div
+            className="book"
+            onClick={handleClick}
+        >
             <div className="book-top">
                 <div
                     className="book-cover"

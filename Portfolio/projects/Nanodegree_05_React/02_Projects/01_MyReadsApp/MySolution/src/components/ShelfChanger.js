@@ -32,6 +32,8 @@ function ShelfChanger(props) {
     return (
         <div className="book-shelf-changer">
             <select
+                className="book-shelf-changer-select"
+                onClick={(e) => e.stopPropagation()}
                 value={bookShelf}
                 onChange={handleChange}
             >

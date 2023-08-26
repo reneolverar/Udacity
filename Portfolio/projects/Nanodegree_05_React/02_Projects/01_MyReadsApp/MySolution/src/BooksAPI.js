@@ -11,8 +11,18 @@ const headers = {
 
 export const get = (bookId) =>
     fetch(`${api}/books/${bookId}`, { headers })
-        .then((res) => res.json())
+        .then((res) => {
+            if (res.ok) {
+                return res.json()
+            }
+            throw new Error('Something went wrong')
+        })
         .then((data) => data.book)
+
+// export const get = (bookId) =>
+//     fetch(`${api}/books/${bookId}`, { headers })
+//         .then((res) => res.json())
+//         .then((data) => data.book)
 
 export const getAll = () =>
     fetch(`${api}/books`, { headers })

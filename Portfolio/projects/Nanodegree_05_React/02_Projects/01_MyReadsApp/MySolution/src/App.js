@@ -1,10 +1,11 @@
 import "./App.css"
 import { useState, useEffect } from "react"
-import { Route, Routes, useNavigate } from "react-router-dom"
-import { Link } from "react-router-dom";
+import { Route, Routes } from "react-router-dom"
+import { Link } from "react-router-dom"
 import BookShelf from "./components/BookShelf"
 import * as BooksAPI from "./BooksAPI"
 import SearchBooks from "./components/SearchBooks"
+import BookDetails from "./components/BookDetails"
 
 function App() {
     // let navigate = useNavigate()
@@ -103,10 +104,17 @@ function App() {
                     path="/"
                     element={
                         <div className="list-books">
-                            <div className="list-books-title">
-                                <h1>MyReads</h1>
-                            </div>
                             <div className="list-books-content">
+                                <p className="centered">
+                                    The books shown can be moved between shelfs
+                                    by clicking on the green button or by drag
+                                    and drop.
+                                </p>
+                                <p className="centered">
+                                    To see more details of the book, click on
+                                    the book cover.
+                                </p>
+
                                 <div>
                                     {books &&
                                         shelfs.map((shelf) => (
@@ -123,16 +131,13 @@ function App() {
                                 </div>
                             </div>
                             <div className="open-search">
-                                <Link
-                                    to="/search"
-                                >
-                                    Add a book
-                                </Link>
+                                <Link to="/search">Add a book</Link>
                             </div>
                         </div>
                     }
                 />
-                {books && <Route
+                {books && (
+                    <Route
                     path="/search"
                     element={
                         <SearchBooks
@@ -140,7 +145,12 @@ function App() {
                             onShelfChange={shelfChange}
                         />
                     }
-                />}
+                    />
+                )}
+                <Route
+                    path="bookID/:slug"
+                    element={<BookDetails />}
+                />
             </Routes>
         </div>
     )

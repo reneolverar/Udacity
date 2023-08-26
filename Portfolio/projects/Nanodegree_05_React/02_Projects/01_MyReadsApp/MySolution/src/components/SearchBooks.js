@@ -43,7 +43,6 @@ export default function SearchBooks(props) {
                 </Link>
                 <SearchBookInputField onSearchInputChange={searchInputChange} />
             </div>
-            <br/><br/>
             <div>
                 {searchResults && (
                     <BookShelf
