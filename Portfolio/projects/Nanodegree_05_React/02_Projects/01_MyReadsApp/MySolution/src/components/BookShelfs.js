@@ -5,11 +5,6 @@ import BookShelf from "./BookShelf"
 
 export default function BookShelfs(props) {
     const { books, onShelfChange } = props
-    const [booksDisplayed, setBooksDisplayed] = useState(books)
-
-    useEffect(() => {
-        setBooksDisplayed(books)
-    }, [books])
 
     const shelfs = [
         {
@@ -42,7 +37,7 @@ export default function BookShelfs(props) {
                             <BookShelf
                                 key={shelf.id}
                                 shelf={shelf}
-                                books={booksDisplayed.filter(
+                                books={books.filter(
                                     (book) => book.shelf === shelf.id
                                 )}
                                 onShelfChange={onShelfChange}

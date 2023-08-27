@@ -1,6 +1,7 @@
 import "./App.css"
 import { useState, useEffect } from "react"
 import { Route, Routes } from "react-router-dom"
+import { DragDropContext } from "@hello-pangea/dnd"
 import * as BooksAPI from "./BooksAPI"
 import SearchBooks from "./components/SearchBooks"
 import BookDetails from "./components/BookDetails"
@@ -77,36 +78,56 @@ function App() {
         getBooks()
     }
 
+    const onDragEnd = (result) => {
+        if (
+            !result.destination ||
+            result.source.droppableId === result.destination.droppableId
+        ) {
+            return
+        }
+        const bookId = result.draggableId
+        const shelfSourceId = result.source.droppableId
+        const shelfDestId = result.destination.droppableId
+        setBooks(books.filter((book) => book.id !== bookId))
+        if (shelfSourceId !== shelfDestId) {
+            shelfChange(
+                books.find((book) => book.id === bookId),
+                shelfDestId
+            )
+        }
+    }
 
     return (
         <div className="app">
+            <DragDropContext onDragEnd={onDragEnd}>
                 {books && (
-            <Routes>
-                <Route
-                    exact
+                    <Routes>
+                        <Route
+                            exact
                             path="*"
-                    element={
+                            element={
                                 <BookShelfs
                                     books={books}
-                                                onShelfChange={shelfChange}
-                                            />
-                    }
-                />
-                    <Route
-                    path="/search"
-                    element={
-                        <SearchBooks
-                            books={books}
-                            onShelfChange={shelfChange}
+                                    onShelfChange={shelfChange}
+                                />
+                            }
                         />
-                    }
-                    />
-                <Route
-                    path="bookID/:slug"
-                    element={<BookDetails />}
-                />
-            </Routes>
+                        <Route
+                            path="/search"
+                            element={
+                                <SearchBooks
+                                    books={books}
+                                    onShelfChange={shelfChange}
+                                />
+                            }
+                        />
+                        <Route
+                            path="bookID/:slug"
+                            element={<BookDetails />}
+                        />
+                    </Routes>
                 )}
+            </DragDropContext>
         </div>
     )
 }

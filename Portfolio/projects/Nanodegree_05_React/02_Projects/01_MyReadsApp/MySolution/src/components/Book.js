@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router-dom"
+import { Draggable } from "@hello-pangea/dnd"
 import PropTypes from "prop-types"
 import ShelfChanger from "./ShelfChanger"
 
 export default function Book(props) {
     let navigate = useNavigate()
 
-    const {book, onShelfChange} = props
+    const { index, book, onShelfChange, isDragDisabled } = props
     const { title, authors, imageLinks } = book
 
     const backgroundImage = imageLinks ? imageLinks.smallThumbnail : ""
@@ -15,25 +16,37 @@ export default function Book(props) {
     }
 
     return (
-        <div
-            className="book"
-            onClick={handleClick}
+        <Draggable
+            draggableId={book.id}
+            index={index}
+            isDragDisabled={isDragDisabled}
         >
-            <div className="book-top">
+            {(provided, snapshot) => (
                 <div
-                    className="book-cover"
-                    style={{
+                    ref={provided.innerRef}
+                    snapshot={snapshot}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                    className="book"
+                    onClick={handleClick}
+                >
+                    <div className="book-top">
+                        <div
+                            className="book-cover"
+                            style={{
                                 backgroundImage: `url("${backgroundImage}")`,
-                    }}
-                ></div>
+                            }}
+                        ></div>
+                    <ShelfChanger
+                        book={props.book}
+                        onShelfChange={onShelfChange}
+                    />
                     </div>
-                <ShelfChanger
-                    book={props.book}
-                    onShelfChange={onShelfChange}
-                />
-            <div className="book-title">{title}</div>
-            <div className="book-authors">{authors}</div>
-        </div>
+                    <div className="book-title">{title}</div>
+                    <div className="book-authors">{authors}</div>
+                </div>
+            )}
+        </Draggable>
     )
 }
 
