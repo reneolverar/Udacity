@@ -1,18 +1,17 @@
-import React from "react"
 import { useNavigate } from "react-router-dom"
 import PropTypes from "prop-types"
 import ShelfChanger from "./ShelfChanger"
 
 export default function Book(props) {
-
     let navigate = useNavigate()
 
     const {book, onShelfChange} = props
     const { title, authors, imageLinks } = book
 
+    const backgroundImage = imageLinks ? imageLinks.smallThumbnail : ""
+
     const handleClick = (e) => {
         navigate("/bookId/" + book.id)
-
     }
 
     return (
@@ -24,18 +23,14 @@ export default function Book(props) {
                 <div
                     className="book-cover"
                     style={{
-                        width: 128,
-                        height: 193,
-                        backgroundImage: imageLinks
-                            ? `url("${imageLinks.smallThumbnail}")`
-                            : "",
+                                backgroundImage: `url("${backgroundImage}")`,
                     }}
                 ></div>
+                    </div>
                 <ShelfChanger
                     book={props.book}
                     onShelfChange={onShelfChange}
                 />
-            </div>
             <div className="book-title">{title}</div>
             <div className="book-authors">{authors}</div>
         </div>

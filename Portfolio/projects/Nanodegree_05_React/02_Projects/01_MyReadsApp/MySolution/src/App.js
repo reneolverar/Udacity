@@ -1,31 +1,13 @@
 import "./App.css"
 import { useState, useEffect } from "react"
 import { Route, Routes } from "react-router-dom"
-import { Link } from "react-router-dom"
-import BookShelf from "./components/BookShelf"
 import * as BooksAPI from "./BooksAPI"
 import SearchBooks from "./components/SearchBooks"
 import BookDetails from "./components/BookDetails"
+import BookShelfs from "./components/BookShelfs"
 
 function App() {
-    // let navigate = useNavigate()
-
     const [books, setBooks] = useState(null)
-
-    const shelfs = [
-        {
-            name: "Currently reading",
-            id: "currentlyReading",
-        },
-        {
-            name: "Want to Read",
-            id: "wantToRead",
-        },
-        {
-            name: "Read",
-            id: "read",
-        },
-    ]
 
     // Example: Book from API
     //   {
@@ -86,57 +68,30 @@ function App() {
         setBooks(res)
     }
 
-    const shelfChange = (book, shelf) =>
+    const shelfChange = (book, shelf) => {
         book.shelf !== shelf && updateBook(book, shelf)
+    }
 
     const updateBook = async (bookToUpdate, shelf) => {
         await BooksAPI.update(bookToUpdate, shelf)
         getBooks()
     }
 
-    // const fetchBook = async (id) => await BooksAPI.get(id)
 
     return (
         <div className="app">
+                {books && (
             <Routes>
                 <Route
                     exact
-                    path="/"
+                            path="*"
                     element={
-                        <div className="list-books">
-                            <div className="list-books-content">
-                                <p className="centered">
-                                    The books shown can be moved between shelfs
-                                    by clicking on the green button or by drag
-                                    and drop.
-                                </p>
-                                <p className="centered">
-                                    To see more details of the book, click on
-                                    the book cover.
-                                </p>
-
-                                <div>
-                                    {books &&
-                                        shelfs.map((shelf) => (
-                                            <BookShelf
-                                                key={shelf.id}
-                                                shelf={shelf}
-                                                books={books.filter(
-                                                    (book) =>
-                                                        book.shelf === shelf.id
-                                                )}
+                                <BookShelfs
+                                    books={books}
                                                 onShelfChange={shelfChange}
                                             />
-                                        ))}
-                                </div>
-                            </div>
-                            <div className="open-search">
-                                <Link to="/search">Add a book</Link>
-                            </div>
-                        </div>
                     }
                 />
-                {books && (
                     <Route
                     path="/search"
                     element={
@@ -146,12 +101,12 @@ function App() {
                         />
                     }
                     />
-                )}
                 <Route
                     path="bookID/:slug"
                     element={<BookDetails />}
                 />
             </Routes>
+                )}
         </div>
     )
 }

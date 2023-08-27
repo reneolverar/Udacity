@@ -1,7 +1,5 @@
 import PropTypes from "prop-types"
 import Book from "./Book"
-import { Link, Routes, Route } from "react-router-dom"
-import BookDetails from "./BookDetails"
 
 export default function BookShelf(props) {
     const {
@@ -16,7 +14,6 @@ export default function BookShelf(props) {
             <h2 className="bookshelf-title">
                 {isSearchResults ? "Search Results" : shelf.name}
             </h2>
-
             <div className="bookshelf-books">
                 <ol className="books-grid">
                     {books.map((book) => (
@@ -29,12 +26,7 @@ export default function BookShelf(props) {
                     ))}
                 </ol>
             </div>
-            <Routes>
-                <Route
-                    path=":bookId/*"
-                    element={<BookDetails />}
-                />
-            </Routes>
+            </div>
         </div>
     )
 }
