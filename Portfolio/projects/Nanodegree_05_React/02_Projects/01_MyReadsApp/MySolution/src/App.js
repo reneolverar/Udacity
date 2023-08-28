@@ -1,4 +1,4 @@
-import "./App.css"
+import "./App.scss"
 import { useState, useEffect } from "react"
 import { Route, Routes } from "react-router-dom"
 import { DragDropContext } from "@hello-pangea/dnd"
