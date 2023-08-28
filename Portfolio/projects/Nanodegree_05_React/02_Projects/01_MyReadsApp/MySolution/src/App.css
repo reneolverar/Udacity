@@ -204,3 +204,8 @@ body,
     width: auto;
     /* height: auto; */
 }
+/* Rating */
+
+.rating {
+    font-size: 1.75em;
+}

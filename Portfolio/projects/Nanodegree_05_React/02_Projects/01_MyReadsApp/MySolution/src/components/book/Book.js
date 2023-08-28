@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom"
 import { Draggable } from "@hello-pangea/dnd"
 import PropTypes from "prop-types"
 import ShelfChanger from "./ShelfChanger"
+import Rating from "./Rating"
 
 export default function Book(props) {
     let navigate = useNavigate()
@@ -44,6 +45,9 @@ export default function Book(props) {
                     </div>
                     <div className="book-title">{title}</div>
                     <div className="book-authors">{authors}</div>
+                    <Rating
+                        book={props.book}
+                    />
                 </div>
             )}
         </Draggable>
