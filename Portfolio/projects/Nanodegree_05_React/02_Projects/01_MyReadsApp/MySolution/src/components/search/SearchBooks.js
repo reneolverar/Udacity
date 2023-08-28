@@ -2,8 +2,8 @@ import PropTypes from "prop-types"
 import { Link } from "react-router-dom"
 import { useImmer } from "use-immer"
 import SearchBookInputField from "./SearchBooksInputField"
-import * as BooksAPI from "../BooksAPI"
-import BookShelf from "./BookShelf"
+import * as BooksAPI from "../../BooksAPI"
+import BookShelf from "../bookshelfs/BookShelf"
 
 export default function SearchBooks(props) {
     const { books, onShelfChange } = props

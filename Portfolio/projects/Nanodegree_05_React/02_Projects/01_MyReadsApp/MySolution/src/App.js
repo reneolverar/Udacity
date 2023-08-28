@@ -3,9 +3,9 @@ import { useState, useEffect } from "react"
 import { Route, Routes } from "react-router-dom"
 import { DragDropContext } from "@hello-pangea/dnd"
 import * as BooksAPI from "./BooksAPI"
-import SearchBooks from "./components/SearchBooks"
-import BookDetails from "./components/BookDetails"
-import BookShelfs from "./components/BookShelfs"
+import SearchBooks from "./components/search/SearchBooks"
+import BookDetails from "./components/book/BookDetails"
+import BookShelfs from "./components/bookshelfs/BookShelfs"
 
 function App() {
     const [books, setBooks] = useState(null)

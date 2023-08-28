@@ -1,7 +1,7 @@
 import PropTypes from "prop-types"
 import { useState, useEffect } from "react"
 import { Link, useParams } from "react-router-dom"
-import * as BooksAPI from "../BooksAPI"
+import * as BooksAPI from "../../BooksAPI"
 
 export default function BookDetails(props) {
     // const { book } = props

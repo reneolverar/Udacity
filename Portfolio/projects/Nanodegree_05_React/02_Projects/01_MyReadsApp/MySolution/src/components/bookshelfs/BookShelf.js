@@ -1,6 +1,6 @@
 import PropTypes from "prop-types"
 import { Droppable } from "@hello-pangea/dnd"
-import Book from "./Book"
+import Book from "../book/Book"
 
 export default function BookShelf(props) {
     const {
