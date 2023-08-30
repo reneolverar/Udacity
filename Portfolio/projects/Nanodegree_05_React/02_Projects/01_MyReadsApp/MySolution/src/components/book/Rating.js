@@ -10,10 +10,14 @@ export default function Rating(props) {
     const { book } = props
     const storedRatings = localStorage.ratings
         ? JSON.parse(localStorage.ratings)
-        : {}
+        : []
     const storedRating =
-        storedRatings.find((x) => x.id === book.id) &&
-        storedRatings.find((x) => x.id === book.id).rating
+        storedRatings.length === 0
+            ? null
+            : storedRatings.find((x) => x.id === book.id)
+            ? storedRatings.find((x) => x.id === book.id).rating
+            : null
+
     const [showRating, setShowRating] = useState(storedRating)
     const [tempRating, setTempRating] = useState(storedRating)
     const [ratingDisplay, setRatingDisplay] = useState([])
@@ -77,5 +81,5 @@ export default function Rating(props) {
 }
 
 Rating.propTypes = {
-    book: PropTypes.object.isRequired
+    book: PropTypes.object.isRequired,
 }
