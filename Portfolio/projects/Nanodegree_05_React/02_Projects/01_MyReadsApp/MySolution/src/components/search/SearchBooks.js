@@ -1,35 +1,45 @@
 import PropTypes from "prop-types"
 import { Link } from "react-router-dom"
-import { useImmer } from "use-immer"
 import SearchBookInputField from "./SearchBooksInputField"
 import * as BooksAPI from "../../BooksAPI"
 import BookShelf from "../bookshelfs/BookShelf"
+import { useState, useEffect } from "react"
 
 export default function SearchBooks(props) {
     const { books, onShelfChange } = props
-    const [searchResults, setSearchResults] = useImmer(null)
+    const [searchResults, setSearchResults] = useState(null)
+
+    useEffect(() => {
+        if (searchResults !== null) {
+            updateBookShelfs(searchResults)
+        }
+    }, [books])
+
+    const updateBookShelfs = (results) => {
+        const updatedResults =
+            results &&
+            results.length > 0 &&
+            results.map(
+                (book) => books.find(({ id }) => id === book.id) || book
+            )
+        setSearchResults(updatedResults)
+    }
 
     const searchInputChange = async (query) => {
         if (query !== "") {
             const res = await BooksAPI.search(query, 20)
-            const results =
-                res &&
-                res.length > 0 &&
-                res.map(
-                    (book) => books.find(({ id }) => id === book.id) || book
-                )
-            setSearchResults(results)
+            updateBookShelfs(res)
         } else {
             setSearchResults("")
         }
     }
 
-    const updateResultsShelf = (book, shelf) => {
-        setSearchResults((draft) => {
-            const bookToUpdate = draft.find((b) => b.id === book.id)
-            bookToUpdate.shelf = shelf
-        })
-        onShelfChange(book, shelf)
+    const updateResultsShelf = async (booksToMove, shelf, bulk = "") => {
+        if (bulk === "bulk") {
+            await onShelfChange(booksToMove, shelf, "bulk")
+        } else {
+            await onShelfChange(booksToMove, shelf)
+        }
     }
 
     return (
@@ -46,7 +56,7 @@ export default function SearchBooks(props) {
             <div>
                 {searchResults && (
                     <BookShelf
-                        isSearchResults
+                        shelf={{ name: "Search Results", id: "searchResults" }}
                         books={searchResults}
                         onShelfChange={updateResultsShelf}
                     />

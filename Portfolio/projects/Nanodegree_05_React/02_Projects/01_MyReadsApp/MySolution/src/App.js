@@ -69,12 +69,20 @@ function App() {
         setBooks(res)
     }
 
-    const shelfChange = (book, shelf) => {
-        book.shelf !== shelf && updateBook(book, shelf)
+    const shelfChange = async (bookIdsToMove, shelf, bulk = "") => {
+        if (bulk === "bulk") {
+            await Promise.all(
+                bookIdsToMove.map(async (bookId) => {
+                    await updateBook(bookId, shelf)
+                })
+            )
+        } else {
+            await updateBook(bookIdsToMove.id, shelf)
+        }
     }
 
-    const updateBook = async (bookToUpdate, shelf) => {
-        await BooksAPI.update(bookToUpdate, shelf)
+    const updateBook = async (bookId, shelf) => {
+        await BooksAPI.update(bookId, shelf)
         getBooks()
     }
 

@@ -3,18 +3,30 @@ import { Draggable } from "@hello-pangea/dnd"
 import PropTypes from "prop-types"
 import ShelfChanger from "./ShelfChanger"
 import Rating from "./Rating"
+import { useState } from "react"
 
 export default function Book(props) {
     let navigate = useNavigate()
 
-    const { index, book, onShelfChange, isDragDisabled } = props
-    const { title, authors, imageLinks } = book
+    const {
+        index,
+        book,
+        onShelfChange,
+        isDragDisabled,
+        bookSelected = false,
+        onSelectBook,
+        showSelection = false,
+    } = props
+
+    const { title, authors, imageLinks, shelf: shelfId } = book
 
     const backgroundImage = imageLinks ? imageLinks.smallThumbnail : ""
 
     const handleClick = (e) => {
         navigate("/bookId/" + book.id)
     }
+
+    const [showBookSelector, setShowBookSelector] = useState(false)
 
     return (
         <Draggable
@@ -30,24 +42,41 @@ export default function Book(props) {
                     {...provided.dragHandleProps}
                     className="book"
                     onClick={handleClick}
+                    onMouseEnter={() => setShowBookSelector(true)}
+                    onMouseLeave={() => setShowBookSelector(false)}
                 >
                     <div className="book-top">
                         <div
+                            className={
+                                showBookSelector || showSelection
+                                    ? ["book-bulk-selector", bookSelected].join(
+                                          " "
+                                      )
+                                    : ""
+                            }
+                            onClick={(e) => {
+                                e.stopPropagation()
+                                onSelectBook(book)
+                            }}
+                        ></div>
+                        <div
                             className="book-cover"
                             style={{
+                                width: "128px",
+                                height: "193px",
                                 backgroundImage: `url("${backgroundImage}")`,
                             }}
                         ></div>
-                    <ShelfChanger
-                        book={props.book}
-                        onShelfChange={onShelfChange}
-                    />
+                        <ShelfChanger
+                            shelfId={shelfId}
+                            onShelfChange={(shelfId) =>
+                                onShelfChange(book, shelfId)
+                            }
+                        />
                     </div>
                     <div className="book-title">{title}</div>
                     <div className="book-authors">{authors}</div>
-                    <Rating
-                        book={props.book}
-                    />
+                    <Rating book={book} />
                 </div>
             )}
         </Draggable>
@@ -55,6 +84,9 @@ export default function Book(props) {
 }
 
 Book.propTypes = {
+    index: PropTypes.number.isRequired,
     book: PropTypes.object.isRequired,
     onShelfChange: PropTypes.func.isRequired,
+    isDragDisabled: PropTypes.bool.isRequired,
+    onSelectBook: PropTypes.func.isRequired,
 }

@@ -53,6 +53,13 @@ body,
     margin-bottom: 0px;
     max-width: max-content;
 }
+
+.bookshelf-title button {
+    height: max-content;
+    max-width: max-content;
+    align-self: self-end;
+}
+
 .bookshelf-books {
     text-align: center;
 }
@@ -185,8 +192,6 @@ body,
 /* book cover */
 
 .book-cover {
-    width: 128px;
-    height: 193px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     background: #eee;
 }

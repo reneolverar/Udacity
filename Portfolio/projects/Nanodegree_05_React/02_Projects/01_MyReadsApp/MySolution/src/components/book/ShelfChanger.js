@@ -1,32 +1,38 @@
 import PropTypes from "prop-types"
 
 const options = [
-    { value: "moveTo", disabled: true, text: "Move to..." },
+    { value: "moveTo", text: "Move to...", disabled: true },
+    { value: "", text: "", hidden: true },
     { value: "currentlyReading", text: "Currently Reading" },
     { value: "wantToRead", text: "Want to Read" },
     { value: "read", text: "Read" },
     { value: "none", text: "None" },
 ]
 
-function Option({ value, text, shelf, disabled = false }) {
+function Option({ value, text, shelfId, disabled = false, hidden = false }) {
     return (
         <option
             value={value}
             disabled={disabled}
+            hidden={hidden}
         >
-            {shelf === value && "✔"} {text}
+            {shelfId === value && "✔"} {text}
         </option>
     )
 }
 
-function ShelfChanger(props) {
-    const { book, onShelfChange } = props
-    const { shelf } = book
+export default function ShelfChanger(props) {
+    const { shelfId, onShelfChange } = props
 
-    const bookShelf = typeof shelf !== "undefined" ? shelf : "none"
+    const bookShelf =
+        typeof shelfId === "undefined"
+            ? "none"
+            : shelfId === "bulkSelect"
+            ? ""
+            : shelfId
 
     const handleChange = (e) => {
-        onShelfChange(book, e.target.value)
+        onShelfChange(e.target.value)
     }
 
     return (
@@ -41,7 +47,7 @@ function ShelfChanger(props) {
                     <Option
                         key={i}
                         {...option}
-                        shelf={bookShelf}
+                        shelfId={bookShelf}
                     />
                 ))}
             </select>
@@ -50,8 +56,5 @@ function ShelfChanger(props) {
 }
 
 ShelfChanger.propTypes = {
-    book: PropTypes.object.isRequired,
     onShelfChange: PropTypes.func.isRequired,
 }
-
-export default ShelfChanger

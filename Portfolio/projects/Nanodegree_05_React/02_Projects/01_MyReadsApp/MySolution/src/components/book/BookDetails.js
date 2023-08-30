@@ -1,10 +1,9 @@
-import PropTypes from "prop-types"
 import { useState, useEffect } from "react"
 import { Link, useParams } from "react-router-dom"
 import * as BooksAPI from "../../BooksAPI"
 
 export default function BookDetails(props) {
-    // const { book } = props
+
     const { slug } = useParams()
 
     const [book, setBook] = useState(null)
@@ -24,7 +23,7 @@ export default function BookDetails(props) {
 
     useEffect(() => {
         fetchBook(slug)
-    }, [])
+    }, [slug])
 
     return (
         <div className="book-details-container">
@@ -53,8 +52,4 @@ export default function BookDetails(props) {
             )}
         </div>
     )
-}
-
-BookDetails.propTypes = {
-    // book: PropTypes.object.isRequired,
 }
